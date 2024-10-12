@@ -61,3 +61,9 @@ bool timer_checkTime()
 {
     return WTIMER0_RIS_R & TIMER_RIS_TATORIS;           // Check Timer A interrupt
 }
+
+// Clear the interrupt flag of Wide Timer 0
+void timer_handle()
+{
+    WTIMER0_ICR_R = TIMER_ICR_TATOCINT;                // Clear Timer A interrupt
+}

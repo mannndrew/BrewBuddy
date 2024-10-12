@@ -36,4 +36,7 @@ uint64_t timer_getTime();
 // Check if Wide Timer 0 has triggered an interrupt
 bool timer_checkTime();
 
+// Clear the interrupt flag of Wide Timer 0
+void timer_handle();
+
 #endif
