@@ -94,6 +94,9 @@
         <mxCell id="wpgfziIOmSFsvqhEl-EZ-43" value="tick_handle()" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
           <mxGeometry x="880" y="280" width="120" height="40" as="geometry" />
         </mxCell>
+        <mxCell id="wpgfziIOmSFsvqhEl-EZ-44" value="timer_handle()" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1080" y="400" width="120" height="40" as="geometry" />
+        </mxCell>
       </root>
     </mxGraphModel>
   </diagram>
