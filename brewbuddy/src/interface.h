@@ -22,8 +22,8 @@
 // Preprocessor Directives
 //-----------------------------------------------------------------------------
 
-#ifndef UART_H_
-#define UART_H_
+#ifndef INTERFACE_H_
+#define INTERFACE_H_
 
 //-----------------------------------------------------------------------------
 // Device Includes
@@ -57,13 +57,11 @@ typedef struct _USER_DATA
 uint32_t inf_getUINT(USER_DATA *data, uint8_t argc);
 void inf_printUINT(uint32_t num);
 
-bool inf_number(char *str, uint8_t *len);
-bool inf_alpha(char *str, uint8_t *len);
-bool inf_combo(char *str, uint8_t *len);
+bool inf_isNumber(char *str, uint8_t *len);
+bool inf_isAlpha(char *str, uint8_t *len);
+bool inf_isCombo(char *str, uint8_t *len);
 bool inf_isCommand(USER_DATA *data, const char cmd[], uint8_t argc);
 bool inf_strCompare(char str1[], char str2[]);
-
-// void inf_getNumber(USER_DATA *data, uint8_t fieldNumber);
 
 void inf_init();
 void inf_putc(char c);
@@ -71,6 +69,6 @@ void inf_puts(char *str);
 char inf_getc();
 void inf_getCommand(USER_DATA *data);
 void inf_parseCommand(USER_DATA *data);
-void inf_doCommand(USER_DATA *data, uint32_t *tp);
+void inf_doCommand(USER_DATA *data, uint32_t *tp, uint32_t tm);
 
 #endif

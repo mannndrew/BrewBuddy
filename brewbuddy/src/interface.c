@@ -19,13 +19,17 @@
 //   The USB on the 2nd controller enumerates to an ICDI interface and a virtual COM port
 
 //-----------------------------------------------------------------------------
-// Device includes, defines, and assembler directives
+// Device Includes
 //-----------------------------------------------------------------------------
 
 #include <stdint.h>
 #include <stdbool.h>
 #include "tm4c123gh6pm.h"
 #include "interface.h"
+
+//-----------------------------------------------------------------------------
+// Defines
+//-----------------------------------------------------------------------------
 
 // PortA masks
 #define UART_TX_MASK 2
@@ -60,7 +64,7 @@ uint32_t inf_getUINT(USER_DATA *data, uint8_t argc)
 void inf_printUINT(uint32_t num)
 {
     char str[10];
-    uint8_t i;
+    uint8_t i = 0;
 
     // check for zero
     if (num == 0)
@@ -86,7 +90,7 @@ void inf_printUINT(uint32_t num)
     return;
 }
 
-bool inf_number(char *str, uint8_t *len)
+bool inf_isNumber(char *str, uint8_t *len)
 {
     uint8_t i = 0;  // initialize index to 0
     bool match = (str[i] != '\0' && str[i] != ' '); // initialize match to true if null or space
@@ -104,7 +108,7 @@ bool inf_number(char *str, uint8_t *len)
     return match;   // return true if length is not 0
 }
 
-bool inf_alpha(char *str, uint8_t *len)
+bool inf_isAlpha(char *str, uint8_t *len)
 {
     uint8_t i = 0;  // initialize index to 0
     bool match = (str[i] != '\0' && str[i] != ' '); // initialize match to true if null or space
@@ -122,7 +126,7 @@ bool inf_alpha(char *str, uint8_t *len)
     return match;   // return true if length is not 0
 }
 
-bool inf_combo(char *str, uint8_t *len)
+bool inf_isCombo(char *str, uint8_t *len)
 {
     uint8_t i = 0;  // initialize index to 0
     bool match = (str[i] != '\0' && str[i] != ' '); // initialize match to true if null or space
@@ -265,7 +269,7 @@ void inf_parseCommand(USER_DATA *data)
             idx++;                                          // Increment string index
         }
 
-        else if (inf_number(&str[idx], &len))
+        else if (inf_isNumber(&str[idx], &len))
         {
             (data->fieldType)[data->fieldCount] = 'n';      // Set field type to number
             (data->fieldPosition)[data->fieldCount] = idx;  // Set field position from i
@@ -273,7 +277,7 @@ void inf_parseCommand(USER_DATA *data)
             idx += len;                                     // Increment string index by field length
         }
 
-        else if (inf_alpha(&str[idx], &len))
+        else if (inf_isAlpha(&str[idx], &len))
         {
             (data->fieldType)[data->fieldCount] = 'a';      // Set field type to alphabetic
             (data->fieldPosition)[data->fieldCount] = idx;  // Set field position from i
@@ -292,7 +296,7 @@ void inf_parseCommand(USER_DATA *data)
     return;
 }
 
-void inf_doCommand(USER_DATA *data, uint32_t *tp)
+void inf_doCommand(USER_DATA *data, uint32_t *tp, uint32_t tm)
 {
     if (inf_isCommand(data, "clear", 0))
     {
@@ -309,7 +313,12 @@ void inf_doCommand(USER_DATA *data, uint32_t *tp)
         }
             
         else if(inf_strCompare(&data->buffer[data->fieldPosition[1]], "-tm"))
-            inf_puts("Getting the value of the thermistor temperature...\r\n\n");
+        {
+            inf_puts("Thermistor Temperature: ");
+            inf_printUINT(tm);
+            inf_puts("\r\n\n");
+        }
+
         else
             inf_puts("Invalid command...type 'help' for a list of commands.\r\n\n");
     }
@@ -321,7 +330,7 @@ void inf_doCommand(USER_DATA *data, uint32_t *tp)
             *tp = inf_getUINT(data, 2);
             inf_puts("Setting the value of the user input temperature...\r\n\n");
         }
-            
+
         else
             inf_puts("Invalid command...type 'help' for a list of commands.\r\n\n");
     }
