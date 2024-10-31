@@ -82,16 +82,24 @@ uint32_t thermo_getTEMP(uint32_t ADC)
 
     float tvol; // thermistor voltage
     float tres; // thermistor resistance
-    float ttem; // temperature in Celsius
+    float tkel; // temperature in Kelvin
+    float tcel; // temperature in Celcius
+    float tfar; // temperature in Fahrenheit
 
     // Convert ADC sample to voltage
-    tvol = (ADC/ 4095) * 3.3;
+    tvol = (ADC*3.3) / 4095;
 
     // Convert voltage to resistance
     tres = ((r1 * 3.3) / tvol) - r1;
 
-    // Convert resistance to temperature
-    ttem = 1 / ((1 / t0) + (1 / b0) * log(tres / r0));
+    // Convert resistance to kelvin
+    tkel = 1 / ((1 / t0) + (1 / b0) * log(tres / r0));
 
-    return (uint32_t) ttem;
+    // Convert kelvin to celcius
+    tcel = tkel - 273.15;
+
+    // Convert celcius to fahrenheit
+    tfar = (tcel * (9/5)) + 32;
+
+    return (uint32_t) tfar;
 }
