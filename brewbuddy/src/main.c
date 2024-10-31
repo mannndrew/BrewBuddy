@@ -42,7 +42,8 @@ void hardware_init(void)
 int main(void)
 {
     // Initialize Local Variables
-    USER_DATA data;
+    USER_DATA data;  // User data struct for UART
+    uint32_t tp = 0;  // User temperature input
 
     // Initialize Hardware
     hardware_init();
@@ -50,8 +51,10 @@ int main(void)
     // Endless loop
     while(true)
     {
-        gets(&data);
-        init_printMenu(1);
+        __asm("   NOP");
+        inf_getCommand(&data);
+        inf_parseCommand(&data);
+        inf_doCommand(&data, &tp);
     }
 }
 

@@ -1,17 +1,17 @@
 ******************************************************************************
                   TI ARM Linker PC v20.2.7                     
 ******************************************************************************
->> Linked Wed Oct 30 01:27:49 2024
+>> Linked Wed Oct 30 22:31:43 2024
 
 OUTPUT FILE NAME:   <brewbuddy.out>
-ENTRY POINT SYMBOL: "_c_int00_noinit_noargs"  address: 000004a9
+ENTRY POINT SYMBOL: "_c_int00_noinit_noargs"  address: 00000c85
 
 
 MEMORY CONFIGURATION
 
          name            origin    length      used     unused   attr    fill
 ----------------------  --------  ---------  --------  --------  ----  --------
-  FLASH                 00000000   00040000  000004f8  0003fb08  R  X
+  FLASH                 00000000   00040000  00000cd4  0003f32c  R  X
   SRAM                  20000000   00008000  00000200  00007e00  RW X
 
 
@@ -19,9 +19,9 @@ SEGMENT ALLOCATION MAP
 
 run origin  load origin   length   init length attrs members
 ----------  ----------- ---------- ----------- ----- -------
-00000000    00000000    000004f8   000004f8    r-x
+00000000    00000000    00000cd4   00000cd4    r-x
   00000000    00000000    0000026c   0000026c    r-- .intvecs
-  0000026c    0000026c    0000028c   0000028c    r-x .text
+  0000026c    0000026c    00000a68   00000a68    r-x .text
 20000000    20000000    00000200   00000000    rw-
   20000000    20000000    00000200   00000000    rw- .stack
 
@@ -34,15 +34,15 @@ section   page    origin      length       input sections
 .intvecs   0    00000000    0000026c     
                   00000000    0000026c     tm4c123gh6pm_startup_ccs.obj (.intvecs)
 
-.text      0    0000026c    0000028c     
-                  0000026c    000001a0     interface.obj (.text)
-                  0000040c    00000068     tick.obj (.text)
-                  00000474    00000034     main.obj (.text)
-                  000004a8    0000002c     rtsv7M4_T_le_v4SPD16_eabi.lib : boot_cortex_m.c.obj (.text:_c_int00_noinit_noargs:_c_int00_noinit_noargs)
-                  000004d4    00000010     clock.obj (.text)
-                  000004e4    0000000c     tm4c123gh6pm_startup_ccs.obj (.text)
-                  000004f0    00000004     rtsv7M4_T_le_v4SPD16_eabi.lib : pre_init.c.obj (.text:_system_pre_init)
-                  000004f4    00000004                                   : exit.c.obj (.text:abort:abort)
+.text      0    0000026c    00000a68     
+                  0000026c    0000096c     interface.obj (.text)
+                  00000bd8    00000068     tick.obj (.text)
+                  00000c40    00000044     main.obj (.text)
+                  00000c84    0000002c     rtsv7M4_T_le_v4SPD16_eabi.lib : boot_cortex_m.c.obj (.text:_c_int00_noinit_noargs:_c_int00_noinit_noargs)
+                  00000cb0    00000010     clock.obj (.text)
+                  00000cc0    0000000c     tm4c123gh6pm_startup_ccs.obj (.text)
+                  00000ccc    00000004     rtsv7M4_T_le_v4SPD16_eabi.lib : pre_init.c.obj (.text:_system_pre_init)
+                  00000cd0    00000004                                   : exit.c.obj (.text:abort:abort)
 
 .cinit     0    00000000    00000000     UNINITIALIZED
 
@@ -66,12 +66,12 @@ MODULE SUMMARY
        Total:                         12     620       0      
                                                               
     .\src\
-       interface.obj                  416    0         0      
+       interface.obj                  2412   0         0      
        tick.obj                       104    0         0      
-       main.obj                       52     0         0      
+       main.obj                       68     0         0      
        clock.obj                      16     0         0      
     +--+------------------------------+------+---------+---------+
-       Total:                         588    0         0      
+       Total:                         2600   0         0      
                                                               
     C:\ti\ccs1280\ccs\tools\compiler\ti-cgt-arm_20.2.7.LTS\lib\rtsv7M4_T_le_v4SPD16_eabi.lib
        boot_cortex_m.c.obj            44     0         0      
@@ -82,15 +82,15 @@ MODULE SUMMARY
                                                               
        Stack:                         0      0         512    
     +--+------------------------------+------+---------+---------+
-       Grand Total:                   652    620       512    
+       Grand Total:                   2664   620       512    
 
 
 GLOBAL SYMBOLS: SORTED ALPHABETICALLY BY Name 
 
 address   name                   
 -------   ----                   
-000004f5  C$$EXIT                
-000004e5  ResetISR               
+00000cd1  C$$EXIT                
+00000cc1  ResetISR               
 20000200  __STACK_END            
 00000200  __STACK_SIZE           
 20000200  __STACK_TOP            
@@ -104,22 +104,30 @@ UNDEFED   __mpu_init
 20000000  __stack                
 20000000  __start___llvm_prf_cnts
 20000000  __stop___llvm_prf_cnts 
-000004a9  _c_int00_noinit_noargs 
-000004f1  _system_pre_init       
-000004f5  abort                  
+00000c85  _c_int00_noinit_noargs 
+00000ccd  _system_pre_init       
+00000cd1  abort                  
 ffffffff  binit                  
 00000000  g_pfnVectors           
-00000335  getc                   
-00000349  gets                   
-00000475  hardware_init          
-0000026d  inf_init               
-000004d5  initSystemClockTo40Mhz 
-000002e1  init_printMenu         
-00000485  main                   
-000002ed  putc                   
-00000309  puts                   
-0000049d  tick_ISR               
-0000040d  tick_init              
+00000c41  hardware_init          
+000003ff  inf_alpha              
+00000499  inf_combo              
+00000909  inf_doCommand          
+00000719  inf_getCommand         
+0000026d  inf_getUINT            
+00000705  inf_getc               
+00000649  inf_init               
+0000054b  inf_isCommand          
+0000037d  inf_number             
+0000079b  inf_parseCommand       
+00000315  inf_printUINT          
+000006bd  inf_putc               
+000006d9  inf_puts               
+000005d7  inf_strCompare         
+00000cb1  initSystemClockTo40Mhz 
+00000c51  main                   
+00000c77  tick_ISR               
+00000bd9  tick_init              
 
 
 GLOBAL SYMBOLS: SORTED BY Symbol Address 
@@ -129,22 +137,30 @@ address   name
 00000000  __TI_static_base__     
 00000000  g_pfnVectors           
 00000200  __STACK_SIZE           
-0000026d  inf_init               
-000002e1  init_printMenu         
-000002ed  putc                   
-00000309  puts                   
-00000335  getc                   
-00000349  gets                   
-0000040d  tick_init              
-00000475  hardware_init          
-00000485  main                   
-0000049d  tick_ISR               
-000004a9  _c_int00_noinit_noargs 
-000004d5  initSystemClockTo40Mhz 
-000004e5  ResetISR               
-000004f1  _system_pre_init       
-000004f5  C$$EXIT                
-000004f5  abort                  
+0000026d  inf_getUINT            
+00000315  inf_printUINT          
+0000037d  inf_number             
+000003ff  inf_alpha              
+00000499  inf_combo              
+0000054b  inf_isCommand          
+000005d7  inf_strCompare         
+00000649  inf_init               
+000006bd  inf_putc               
+000006d9  inf_puts               
+00000705  inf_getc               
+00000719  inf_getCommand         
+0000079b  inf_parseCommand       
+00000909  inf_doCommand          
+00000bd9  tick_init              
+00000c41  hardware_init          
+00000c51  main                   
+00000c77  tick_ISR               
+00000c85  _c_int00_noinit_noargs 
+00000cb1  initSystemClockTo40Mhz 
+00000cc1  ResetISR               
+00000ccd  _system_pre_init       
+00000cd1  C$$EXIT                
+00000cd1  abort                  
 20000000  __stack                
 20000000  __start___llvm_prf_cnts
 20000000  __stop___llvm_prf_cnts 
@@ -158,4 +174,4 @@ ffffffff  __c_args__
 ffffffff  binit                  
 UNDEFED   __mpu_init             
 
-[31 symbols]
+[39 symbols]

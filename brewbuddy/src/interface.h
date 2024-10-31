@@ -54,12 +54,23 @@ typedef struct _USER_DATA
 // Subroutines
 //-----------------------------------------------------------------------------
 
-void inf_init();
-void init_printMenu(uint32_t printTRUE);
+uint32_t inf_getUINT(USER_DATA *data, uint8_t argc);
+void inf_printUINT(uint32_t num);
 
-void putc(char c);
-void puts(char *str);
-char getc();
-void gets(USER_DATA *data);
+bool inf_number(char *str, uint8_t *len);
+bool inf_alpha(char *str, uint8_t *len);
+bool inf_combo(char *str, uint8_t *len);
+bool inf_isCommand(USER_DATA *data, const char cmd[], uint8_t argc);
+bool inf_strCompare(char str1[], char str2[]);
+
+// void inf_getNumber(USER_DATA *data, uint8_t fieldNumber);
+
+void inf_init();
+void inf_putc(char c);
+void inf_puts(char *str);
+char inf_getc();
+void inf_getCommand(USER_DATA *data);
+void inf_parseCommand(USER_DATA *data);
+void inf_doCommand(USER_DATA *data, uint32_t *tp);
 
 #endif
