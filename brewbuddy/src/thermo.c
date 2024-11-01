@@ -87,7 +87,7 @@ uint32_t thermo_getTEMP(uint32_t ADC)
     float tfar; // temperature in Fahrenheit
 
     // Convert ADC sample to voltage
-    tvol = (ADC*3.3) / 4095;
+    tvol = (ADC * 3.3) / 4095;
 
     // Convert voltage to resistance
     tres = ((r1 * 3.3) / tvol) - r1;
@@ -99,7 +99,7 @@ uint32_t thermo_getTEMP(uint32_t ADC)
     tcel = tkel - 273.15;
 
     // Convert celcius to fahrenheit
-    tfar = (tcel * (9/5)) + 32;
+    tfar = ((tcel * 9) / 5) + 32;
 
     return (uint32_t) tfar;
 }
