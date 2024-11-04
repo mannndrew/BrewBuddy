@@ -298,6 +298,7 @@ void inf_parseCommand(USER_DATA *data)
 
 void inf_doCommand(USER_DATA *data, uint32_t *tp, uint32_t tm)
 {
+    char degree_symbol[4] = {0xC2, 0xB0, 'F', '\0'};
     if (inf_isCommand(data, "clear", 0))
     {
         inf_puts("\033[2J\033[H");
@@ -309,6 +310,7 @@ void inf_doCommand(USER_DATA *data, uint32_t *tp, uint32_t tm)
         {
             inf_puts("User Input Temperature: ");
             inf_printUINT(*tp);
+            inf_puts(degree_symbol);
             inf_puts("\r\n\n");
         }
             
@@ -316,6 +318,7 @@ void inf_doCommand(USER_DATA *data, uint32_t *tp, uint32_t tm)
         {
             inf_puts("Thermistor Temperature: ");
             inf_printUINT(tm);
+            inf_puts(degree_symbol);
             inf_puts("\r\n\n");
         }
 
@@ -337,10 +340,11 @@ void inf_doCommand(USER_DATA *data, uint32_t *tp, uint32_t tm)
 
     else if (inf_isCommand(data, "help", 0))
     {
-        inf_puts("Available Commands:                                          \r\n");
+        inf_puts("Available Commands:                                         \r\n");
         inf_puts("   get -tp       Get the value of the user input temperature\r\n");
         inf_puts("   get -tm       Get the value of the thermistor temperature\r\n");
-        inf_puts("   set -tp       Set the value of the user input temperature\r\n\n");
+        inf_puts("   set -tp       Set the value of the user input temperature\r\n");
+        inf_puts("   clear         Clear the terminal screen                  \r\n\n");
     }
 
     else

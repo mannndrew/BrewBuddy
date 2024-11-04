@@ -20,8 +20,9 @@
 #include <stdbool.h>
 #include "tm4c123gh6pm.h"
 #include "clock.h"
-#include "interface.h"
+#include "heater.h"
 #include "thermo.h"
+#include "interface.h"
 #include "tick.h"
 
 //-----------------------------------------------------------------------------
@@ -38,6 +39,7 @@ uint32_t tm; // Thermistor Temperature
 void hardware_init(void)
 {
     initSystemClockTo40Mhz();
+    heater_init();
     thermo_init();
     inf_init();
     tick_init();
@@ -59,6 +61,7 @@ int main(void)
 
     // Initialize Hardware
     hardware_init();
+    heater_off();
 
     // Endless loop
     while(true)
@@ -76,10 +79,20 @@ int main(void)
 
 void tick_ISR()
 {
+    // Get Thermistor Temperature
     tm = thermo_getTEMP(thermo_getADC());
-    inf_printUINT(tm);
-    inf_puts("\r\n");
 
+    // Check if Heater should be on or off
+    if (tp <= tm)
+        heater_off();
+    else
+        heater_on();
+
+    // Print Thermistor Temperature if Debugging
+    // inf_printUINT(tm);
+    // inf_puts("\r\n");
+
+    // Clear Interrupt Flag
     TIMER0_ICR_R = TIMER_ICR_TATOCINT; // clear interrupt flag
     return;
 }
