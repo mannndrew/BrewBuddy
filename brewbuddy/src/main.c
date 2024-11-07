@@ -79,6 +79,9 @@ int main(void)
 
 void tick_ISR()
 {
+    // Degree symbol for temperature symbol
+    char degree_symbol[4] = {0xC2, 0xB0, 'F', '\0'};
+
     // Get Thermistor Temperature
     tm = thermo_getTEMP(thermo_getADC());
 
@@ -89,8 +92,14 @@ void tick_ISR()
         heater_on();
 
     // Print Thermistor Temperature if Debugging
-    // inf_printUINT(tm);
+//    inf_printUINT(tm);
+//    inf_puts("\r\n");
+//    inf_puts("\033[2J\033[H");   // Clear Screen
+//    inf_puts("Thermistor Temperature: ");
+//    inf_printUINT(tm);
+//    inf_puts(degree_symbol);
     // inf_puts("\r\n");
+    // inf_puts("\x1B[?25l"); 
 
     // Clear Interrupt Flag
     TIMER0_ICR_R = TIMER_ICR_TATOCINT; // clear interrupt flag
