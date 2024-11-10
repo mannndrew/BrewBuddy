@@ -22,6 +22,7 @@
 #include "clock.h"
 #include "heater.h"
 #include "thermo.h"
+#include "infra.h"
 #include "interface.h"
 #include "tick.h"
 
@@ -42,7 +43,7 @@ void hardware_init(void)
     heater_init();
     thermo_init();
     inf_init();
-    tick_init();
+    // tick_init();
     return;
 }
 
@@ -62,12 +63,32 @@ int main(void)
     // Initialize Hardware
     hardware_init();
     heater_off();
+    inf_boldOn();
+
+    // TEST CODE
+    infra_init();
+    uint32_t value;
+    uint32_t i;
+    while (1)
+    {
+        value = infra_read();
+        inf_printUINT(value);
+        inf_puts("\r\n");
+
+        // delay
+        for (i = 0; i < 5000000; i++);
+            __asm(" NOP");
+    }
 
     // Endless loop
     while(true)
     {
-        __asm("   NOP");
+        inf_setCursor(4);
+        inf_cursorOn();
         inf_getCommand(&data);
+        inf_cursorOff();
+        inf_clearScreen(4, 10);
+        inf_setCursor(5);
         inf_parseCommand(&data);
         inf_doCommand(&data, &tp, tm);
     }
@@ -79,8 +100,7 @@ int main(void)
 
 void tick_ISR()
 {
-    // Degree symbol for temperature symbol
-    char degree_symbol[4] = {0xC2, 0xB0, 'F', '\0'};
+
 
     // Get Thermistor Temperature
     tm = thermo_getTEMP(thermo_getADC());
@@ -91,15 +111,8 @@ void tick_ISR()
     else
         heater_on();
 
-    // Print Thermistor Temperature if Debugging
-//    inf_printUINT(tm);
-//    inf_puts("\r\n");
-//    inf_puts("\033[2J\033[H");   // Clear Screen
-//    inf_puts("Thermistor Temperature: ");
-//    inf_printUINT(tm);
-//    inf_puts(degree_symbol);
-    // inf_puts("\r\n");
-    // inf_puts("\x1B[?25l"); 
+    // Print Header
+    inf_printHeader(tm, tp);
 
     // Clear Interrupt Flag
     TIMER0_ICR_R = TIMER_ICR_TATOCINT; // clear interrupt flag

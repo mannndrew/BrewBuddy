@@ -56,6 +56,13 @@ typedef struct _USER_DATA
 
 uint32_t inf_getUINT(USER_DATA *data, uint8_t argc);
 void inf_printUINT(uint32_t num);
+void inf_printHeader(uint32_t tm, uint32_t tp);
+void inf_clearScreen(uint32_t start, uint32_t end);
+void inf_setCursor(uint32_t line);
+void inf_cursorOn();
+void inf_cursorOff();
+void inf_boldOn();
+void inf_boldOff();
 
 bool inf_isNumber(char *str, uint8_t *len);
 bool inf_isAlpha(char *str, uint8_t *len);

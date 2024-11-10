@@ -90,6 +90,66 @@ void inf_printUINT(uint32_t num)
     return;
 }
 
+void inf_printHeader(uint32_t tm, uint32_t tp)
+{
+    char degree_symbol[4] = {0xC2, 0xB0, 'F', '\0'};
+    inf_puts("\x1B[?25l"); // Hide Cursor
+    inf_puts("\x1B[s"); // Save Cursor Position
+    inf_puts("\x1B[1;1H"); // Move Cursor to Line 1
+    inf_puts("\x1B[K"); // Clear Line
+    inf_puts("Thermistor Temperature: ");
+    inf_printUINT(tm);
+    inf_puts(degree_symbol);
+    inf_puts("\x1B[2;1H"); // Move Cursor to Line 2
+    inf_puts("\x1B[K"); // Clear Line
+    inf_puts("User Input Temperature: ");
+    inf_printUINT(tp);
+    inf_puts(degree_symbol);
+    inf_puts("\x1B[u"); // Restore Cursor Position
+    inf_puts("\x1B[?25h"); // Show Cursor
+}
+
+void inf_clearScreen(uint32_t start, uint32_t end)
+{
+    uint32_t i;
+    inf_puts("\x1B[s"); // Save Cursor Position
+    for (i = start; i <= end; i++)
+    {
+        inf_puts("\x1B[");  // Move Cursor to Line i
+        inf_printUINT(i);
+        inf_puts(";1H");  
+        inf_puts("\x1B[K"); // Clear Line
+    }
+    inf_puts("\x1B[u"); // Restore Cursor Position
+}
+
+void inf_setCursor(uint32_t line)
+{
+    inf_puts("\x1B[");  // Move Cursor to Line i
+    inf_printUINT(line);
+    inf_puts(";1H");  
+}
+
+void inf_cursorOn()
+{
+    inf_puts("\x1B[?25h"); // Show Cursor
+}
+
+void inf_cursorOff()
+{
+    inf_puts("\x1B[?25l"); // Hide Cursor
+}
+
+void inf_boldOn()
+{
+    inf_puts("\x1B[1m"); // Bold On
+}
+
+void inf_boldOff()
+{
+    inf_puts("\x1B[22m"); // Bold Off
+}
+
 bool inf_isNumber(char *str, uint8_t *len)
 {
     uint8_t i = 0;  // initialize index to 0
@@ -301,7 +361,7 @@ void inf_doCommand(USER_DATA *data, uint32_t *tp, uint32_t tm)
     char degree_symbol[4] = {0xC2, 0xB0, 'F', '\0'};
     if (inf_isCommand(data, "clear", 0))
     {
-        inf_puts("\033[2J\033[H");
+        inf_clearScreen(4, 10);
     }
 
     else if (inf_isCommand(data, "get", 1))
