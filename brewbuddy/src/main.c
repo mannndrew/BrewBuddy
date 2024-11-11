@@ -43,7 +43,7 @@ void hardware_init(void)
     heater_init();
     thermo_init();
     inf_init();
-    // tick_init();
+    tick_init();
     return;
 }
 
@@ -66,6 +66,7 @@ int main(void)
     inf_boldOn();
 
     // TEST CODE
+    /*
     infra_init();
     uint32_t value;
     uint32_t i;
@@ -79,6 +80,7 @@ int main(void)
         for (i = 0; i < 5000000; i++);
             __asm(" NOP");
     }
+    */
 
     // Endless loop
     while(true)
