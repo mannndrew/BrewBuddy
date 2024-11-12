@@ -30,6 +30,8 @@
 // Defines
 //-----------------------------------------------------------------------------
 
+#define I2C0SCL (1 << 2)
+#define I2C0SDA (1 << 3)
 #define MLX90614_ADDR 0x5A  // 7-bit address of the MLX90614
 
 //-----------------------------------------------------------------------------
@@ -39,26 +41,34 @@
 // Initialize Hardware (I2C0)
 void infra_init(void)
 {
-    // Step 1: Enable the I2C0 clock
-    SYSCTL_RCGCI2C_R |= SYSCTL_RCGCI2C_R0;
-    while ((SYSCTL_PRI2C_R & SYSCTL_PRI2C_R0) == 0);
-    
-    // Step 2: Enable clock for GPIO Port B (I2C0 on PB2 and PB3)
-    SYSCTL_RCGCGPIO_R |= SYSCTL_RCGCGPIO_R1;  // Enable GPIO port B
-    while ((SYSCTL_PRGPIO_R & SYSCTL_PRGPIO_R1) == 0);
+    // Enable Clocks
+    SYSCTL_RCGCI2C_R |= SYSCTL_RCGCI2C_R0;    // Enable I2C0 Clock
+    SYSCTL_RCGCGPIO_R |= SYSCTL_RCGCGPIO_R1;  // Enable GPIOB Clock
+    _delay_cycles(3);                         // Delay for clock to stabilize
 
-    // Step 3: Enable alternate function on PB2 (SCL) and PB3 (SDA) (Default)
-    // GPIO_PORTB_AFSEL_R |= 0x03;  // Enable alternate function for PB2, PB3
+    // Configure Push Pull Output for SCL
+    GPIO_PORTB_ODR_R &= ~I2C0SCL;  // Set SCL to no open drain
+    GPIO_PORTB_DIR_R |=  I2C0SCL;  // Set SCL as output
+    GPIO_PORTB_DEN_R |=  I2C0SCL;  // Set SCL as digital
 
-    // Step 4: Enable open-drain on PB3 (SDA)
-    GPIO_PORTB_ODR_R |= 0x08;
+    // Configure Alternate Function for SCL
+    GPIO_PORTB_PCTL_R = (GPIO_PORTB_PCTL_R & 0xFFFFF0FF) | GPIO_PCTL_PB2_I2C0SCL; // Set Port Control for SCL
+    GPIO_PORTB_AFSEL_R |= I2C0SCL;  // Enable alternate function for SCL
 
-    GPIO_PORTB_PCTL_R = (GPIO_PORTB_PCTL_R & 0xFFFF00FF) | 0x00003300; // Configure pins for I2C0
-    GPIO_PORTB_DEN_R |= 0x0C;    // Enable digital function on PB2, PB3
-    //GPIO_PORTB_PUR_R |= 0x0C;    // Enable pull-ups on PB2, PB3
+    // Configure Open Drain Output for SDA
+    GPIO_PORTB_ODR_R |= I2C0SDA;  // Set SDA to open drain
+    GPIO_PORTB_DIR_R |= I2C0SDA;  // Set SDA as output
+    GPIO_PORTB_DEN_R |= I2C0SDA;  // Set SDA as digital
 
-    I2C0_MCR_R = I2C_MCR_MFE;   // Set I2C0 as master
-    I2C0_MTPR_R = 19;         // Set I2C speed to standard mode (100 kHz)
+    // Configure Alternate Function for SDA
+    GPIO_PORTB_PCTL_R = (GPIO_PORTB_PCTL_R & 0xFFFF0FFF) | GPIO_PCTL_PB3_I2C0SDA; // Set Port Control for SDA
+    GPIO_PORTB_AFSEL_R |= I2C0SDA;  // Enable alternate function for SDA
+
+    // Configure I2C0 Peripheral
+    I2C0_MCR_R = 0;                 // Disable I2C0 to program
+    I2C0_MTPR_R = 19;               // Set I2C speed to standard mode (100 kHz)
+    I2C0_MCR_R = I2C_MCR_MFE;       // Set I2C0 as master
+    I2C0_MCS_R = I2C_MCS_STOP;      // Set I2C0 to stop
 }
 
 uint32_t infra_read(void)
@@ -69,7 +79,7 @@ uint32_t infra_read(void)
     
     // Send register address to read
     I2C0_MSA_R = (MLX90614_ADDR << 1) & 0xFE; // Set address (write)
-    I2C0_MDR_R = 0x6;                         // Set the register to read
+    I2C0_MDR_R = 0x7;                         // Set the register to read
     I2C0_MCS_R = I2C_MCS_RUN | I2C_MCS_START; // Start transmission
     
     while (I2C0_MCS_R & I2C_MCS_BUSY);  // Wait for transaction to complete
