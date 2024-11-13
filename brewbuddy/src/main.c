@@ -33,6 +33,7 @@
 
 uint32_t tp; // User Input Temperature
 uint32_t tm; // Thermistor Temperature
+uint32_t ti; // Infrared Temperature
 
 //-----------------------------------------------------------------------------
 // Hardware Initialize Function
@@ -44,7 +45,8 @@ void hardware_init(void)
     heater_init();
     thermo_init();
     inf_init();
-    // tick_init();
+    infra_init();
+    tick_init();
     return;
 }
 
@@ -57,18 +59,14 @@ int main(void)
     // Initialize Local Variables
     USER_DATA data;  // User data struct for UART
 
-    // Initialize Global Variables
-    tp = 0; // User Input Temperature
-    tm = 0; // Thermistor Temperature
-
     // Initialize Hardware
     hardware_init();
     heater_off();
     inf_boldOn();
 
-    ///////////// TEST CODE
+    ///////////// TEST CODE ///////////
+    /*
     uint32_t value;
-    uint32_t i;
     infra_init();
     waitMicrosecond(2000);
 
@@ -81,17 +79,18 @@ int main(void)
         // delay
         waitMicrosecond(1000000);
     }
+    */
     ///////////////////////////////////
 
     // Endless loop
     while(true)
     {
-        inf_setCursor(4);
+        inf_setCursor(5);
         inf_cursorOn();
         inf_getCommand(&data);
         inf_cursorOff();
         inf_clearScreen(4, 10);
-        inf_setCursor(5);
+        inf_setCursor(6);
         inf_parseCommand(&data);
         inf_doCommand(&data, &tp, tm);
     }
@@ -103,7 +102,8 @@ int main(void)
 
 void tick_ISR()
 {
-
+    // Get Infrared Temperature
+    ti = infra_read();
 
     // Get Thermistor Temperature
     tm = thermo_getTEMP(thermo_getADC());
@@ -115,7 +115,7 @@ void tick_ISR()
         heater_on();
 
     // Print Header
-    inf_printHeader(tm, tp);
+    inf_printHeader(ti, tm, tp);
 
     // Clear Interrupt Flag
     TIMER0_ICR_R = TIMER_ICR_TATOCINT; // clear interrupt flag

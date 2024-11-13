@@ -90,21 +90,30 @@ void inf_printUINT(uint32_t num)
     return;
 }
 
-void inf_printHeader(uint32_t tm, uint32_t tp)
+void inf_printHeader(uint32_t ti, uint32_t tm, uint32_t tp)
 {
     char degree_symbol[4] = {0xC2, 0xB0, 'F', '\0'};
     inf_puts("\x1B[?25l"); // Hide Cursor
     inf_puts("\x1B[s"); // Save Cursor Position
+
     inf_puts("\x1B[1;1H"); // Move Cursor to Line 1
+    inf_puts("\x1B[K"); // Clear Line
+    inf_puts("Infrared Temperature: ");
+    inf_printUINT(ti);
+    inf_puts(degree_symbol);
+
+    inf_puts("\x1B[2;1H"); // Move Cursor to Line 1
     inf_puts("\x1B[K"); // Clear Line
     inf_puts("Thermistor Temperature: ");
     inf_printUINT(tm);
     inf_puts(degree_symbol);
-    inf_puts("\x1B[2;1H"); // Move Cursor to Line 2
+
+    inf_puts("\x1B[3;1H"); // Move Cursor to Line 3
     inf_puts("\x1B[K"); // Clear Line
     inf_puts("User Input Temperature: ");
     inf_printUINT(tp);
     inf_puts(degree_symbol);
+
     inf_puts("\x1B[u"); // Restore Cursor Position
     inf_puts("\x1B[?25h"); // Show Cursor
 }
