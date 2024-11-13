@@ -25,6 +25,7 @@
 #include "infra.h"
 #include "interface.h"
 #include "tick.h"
+#include "wait.h"
 
 //-----------------------------------------------------------------------------
 // Global Variables
@@ -43,7 +44,7 @@ void hardware_init(void)
     heater_init();
     thermo_init();
     inf_init();
-    tick_init();
+    // tick_init();
     return;
 }
 
@@ -65,11 +66,12 @@ int main(void)
     heater_off();
     inf_boldOn();
 
-    // TEST CODE
-    /*
-    infra_init();
+    ///////////// TEST CODE
     uint32_t value;
     uint32_t i;
+    infra_init();
+    waitMicrosecond(2000);
+
     while (1)
     {
         value = infra_read();
@@ -77,10 +79,9 @@ int main(void)
         inf_puts("\r\n");
 
         // delay
-        for (i = 0; i < 5000000; i++);
-            __asm(" NOP");
+        waitMicrosecond(1000000);
     }
-    */
+    ///////////////////////////////////
 
     // Endless loop
     while(true)

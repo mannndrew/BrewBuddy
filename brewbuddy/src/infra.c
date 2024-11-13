@@ -32,7 +32,8 @@
 
 #define I2C0SCL (1 << 2)
 #define I2C0SDA (1 << 3)
-#define MLX90614_ADDR 0x5A  // 7-bit address of the MLX90614
+#define MLX90614_ADDR  0x5A  // 7-bit address of the MLX90614
+#define MLX90614_TOBJ1 0x07  // Register address for object temperature 1
 
 //-----------------------------------------------------------------------------
 // Subroutines
@@ -64,9 +65,12 @@ void infra_init(void)
     GPIO_PORTB_PCTL_R = (GPIO_PORTB_PCTL_R & 0xFFFF0FFF) | GPIO_PCTL_PB3_I2C0SDA; // Set Port Control for SDA
     GPIO_PORTB_AFSEL_R |= I2C0SDA;  // Enable alternate function for SDA
 
+    // GPIO_PORTB_PUR_R |= (I2C0SCL | I2C0SDA);  // Enable pull-ups for both SDA and SCL
+
     // Configure I2C0 Peripheral
     I2C0_MCR_R = 0;                 // Disable I2C0 to program
-    I2C0_MTPR_R = 19;               // Set I2C speed to standard mode (100 kHz)
+    // Change to 39 (50 kHz) for slower speed
+    I2C0_MTPR_R = 19;               // Set I2C speed to standard mode (100 kHz) 
     I2C0_MCR_R = I2C_MCR_MFE;       // Set I2C0 as master
     I2C0_MCS_R = I2C_MCS_STOP;      // Set I2C0 to stop
 }
@@ -78,24 +82,31 @@ uint32_t infra_read(void)
     uint32_t value;
     
     // Send register address to read
-    I2C0_MSA_R = (MLX90614_ADDR << 1) & 0xFE; // Set address (write)
-    I2C0_MDR_R = 0x7;                         // Set the register to read
-    I2C0_MCS_R = I2C_MCS_RUN | I2C_MCS_START; // Start transmission
+    I2C0_MSA_R = (MLX90614_ADDR << 1) & (0xFE);              // Set address (write)
+    I2C0_MDR_R = MLX90614_TOBJ1;                             // Set the register
+    I2C0_MICR_R = I2C_MICR_IC;                               // Clear interrupt
+    I2C0_MCS_R = I2C_MCS_START | I2C_MCS_RUN I2C_MCS_STOP;   // Start transmission
+    while ((I2C0_MRIS_R & I2C_MRIS_RIS) == 0);               // Wait for transaction to complete
+    // while (I2C0_MCS_R & I2C_MCS_BUSY);
     
-    while (I2C0_MCS_R & I2C_MCS_BUSY);  // Wait for transaction to complete
-    
-    // Now switch to read mode and get the data
-    I2C0_MSA_R = (MLX90614_ADDR << 1) | 0x01; // Set address (read)
-    I2C0_MCS_R = I2C_MCS_RUN | I2C_MCS_START;  // Start transmission
-    
-    while (I2C0_MCS_R & I2C_MCS_BUSY);  // Wait for transaction to complete
-    
-    msb = I2C0_MDR_R; // Read MSB
-    I2C0_MCS_R = I2C_MCS_RUN;  // Complete read
-    
-    while (I2C0_MCS_R & I2C_MCS_BUSY);  // Wait for transaction to complete
-    
-    lsb = I2C0_MDR_R;  // Read LSB
+    // Send read to get the data
+    I2C0_MSA_R = (MLX90614_ADDR << 1) | 0x01;                // Set address (read)
+    I2C0_MICR_R = I2C_MICR_IC;                               // Clear interrupt
+    I2C0_MCS_R = I2C_MCS_START | I2C_MCS_RUN;                // Start transmission
+    while ((I2C0_MRIS_R & I2C_MRIS_RIS) == 0);               // Wait for transaction to complete
+    // while (I2C0_MCS_R & I2C_MCS_BUSY);
+
+    // Read LSB
+    I2C0_MICR_R = I2C_MICR_IC;                               // Clear interrupt
+    I2C0_MCS_R = I2C_MCS_RUN;                                // Start read without STOP
+    while ((I2C0_MRIS_R & I2C_MRIS_RIS) == 0);               // Wait for transaction to complete
+    lsb = I2C0_MDR_R;                                        // Store LSB
+
+    // Read MSB
+    I2C0_MICR_R = I2C_MICR_IC;                               // Clear interrupt
+    I2C0_MCS_R = I2C_MCS_RUN | I2C_MCS_STOP;                 // Start read with STOP
+    while ((I2C0_MRIS_R & I2C_MRIS_RIS) == 0);               // Wait for transaction to complete
+    msb = I2C0_MDR_R;                                        // Store MSB
     
     value = (msb << 8) | lsb;  // Combine MSB and LSB into 16-bit value
     
