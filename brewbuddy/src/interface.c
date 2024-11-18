@@ -25,6 +25,7 @@
 #include <stdint.h>
 #include <stdbool.h>
 #include "tm4c123gh6pm.h"
+#include "eeprom.h"
 #include "interface.h"
 
 //-----------------------------------------------------------------------------
@@ -80,6 +81,8 @@ void inf_printUINT(uint32_t num)
             num = num / 10;
         }
 
+        str[i] = '\0';
+
         // reverse the string and print
         do
         {
@@ -90,7 +93,7 @@ void inf_printUINT(uint32_t num)
     return;
 }
 
-void inf_printHeader(uint32_t ti, uint32_t tm, uint32_t tp)
+void inf_printHeader(uint32_t ti, uint32_t tm, uint32_t tp, bool heater_status)
 {
     char degree_symbol[4] = {0xC2, 0xB0, 'F', '\0'};
     inf_puts("\x1B[?25l"); // Hide Cursor
@@ -102,7 +105,7 @@ void inf_printHeader(uint32_t ti, uint32_t tm, uint32_t tp)
     inf_printUINT(ti);
     inf_puts(degree_symbol);
 
-    inf_puts("\x1B[2;1H"); // Move Cursor to Line 1
+    inf_puts("\x1B[2;1H"); // Move Cursor to Line 2
     inf_puts("\x1B[K"); // Clear Line
     inf_puts("Thermistor Temperature: ");
     inf_printUINT(tm);
@@ -113,6 +116,11 @@ void inf_printHeader(uint32_t ti, uint32_t tm, uint32_t tp)
     inf_puts("User Input Temperature: ");
     inf_printUINT(tp);
     inf_puts(degree_symbol);
+
+    inf_puts("\x1B[4;1H"); // Move Cursor to Line 4
+    inf_puts("\x1B[K"); // Clear Line
+    inf_puts("Heater Status: ");
+    heater_status ? inf_puts("ON") : inf_puts("OFF");
 
     inf_puts("\x1B[u"); // Restore Cursor Position
     inf_puts("\x1B[?25h"); // Show Cursor
@@ -365,28 +373,22 @@ void inf_parseCommand(USER_DATA *data)
     return;
 }
 
-void inf_doCommand(USER_DATA *data, uint32_t *tp, uint32_t tm)
+void inf_doCommand(USER_DATA *data, uint32_t *tp, uint32_t *tsafe)
 {
+    uint32_t tmp;
+
     char degree_symbol[4] = {0xC2, 0xB0, 'F', '\0'};
     if (inf_isCommand(data, "clear", 0))
     {
-        inf_clearScreen(4, 10);
+        inf_clearScreen(5, 12);
     }
 
     else if (inf_isCommand(data, "get", 1))
     {
-        if(inf_strCompare(&data->buffer[data->fieldPosition[1]], "-tp"))
+        if(inf_strCompare(&data->buffer[data->fieldPosition[1]], "-tsafe"))
         {
-            inf_puts("User Input Temperature: ");
-            inf_printUINT(*tp);
-            inf_puts(degree_symbol);
-            inf_puts("\r\n\n");
-        }
-            
-        else if(inf_strCompare(&data->buffer[data->fieldPosition[1]], "-tm"))
-        {
-            inf_puts("Thermistor Temperature: ");
-            inf_printUINT(tm);
+            inf_puts("Safety Temperature: ");
+            inf_printUINT(*tsafe);
             inf_puts(degree_symbol);
             inf_puts("\r\n\n");
         }
@@ -399,8 +401,28 @@ void inf_doCommand(USER_DATA *data, uint32_t *tp, uint32_t tm)
     {
         if (inf_strCompare(&data->buffer[data->fieldPosition[1]], "-tp"))
         {
-            *tp = inf_getUINT(data, 2);
-            inf_puts("Setting the value of the user input temperature...\r\n\n");
+            tmp = inf_getUINT(data, 2);
+            if (70 <= tmp && tmp <= 140)
+            {
+                *tp = tmp;
+                inf_puts("Setting the value of the user input temperature...\r\n\n");
+            }
+            else
+                inf_puts("Invalid temperature...must be between 70 and 140 degrees F.\r\n\n");
+
+        }
+
+        else if (inf_strCompare(&data->buffer[data->fieldPosition[1]], "-tsafe"))
+        {
+            tmp = inf_getUINT(data, 2);
+            if (100 <= tmp && tmp <= 300)
+            {
+                *tsafe = tmp;
+                eeprom_write(&tmp);
+                inf_puts("Setting the value of the safety temperature...\r\n\n");
+            }
+            else
+                inf_puts("Invalid temperature...must be between 100 and 300 degrees F.\r\n\n");
         }
 
         else
@@ -409,11 +431,11 @@ void inf_doCommand(USER_DATA *data, uint32_t *tp, uint32_t tm)
 
     else if (inf_isCommand(data, "help", 0))
     {
-        inf_puts("Available Commands:                                         \r\n");
-        inf_puts("   get -tp       Get the value of the user input temperature\r\n");
-        inf_puts("   get -tm       Get the value of the thermistor temperature\r\n");
-        inf_puts("   set -tp       Set the value of the user input temperature\r\n");
-        inf_puts("   clear         Clear the terminal screen                  \r\n\n");
+        inf_puts("Available Commands:                                                  \r\n");
+        inf_puts("   get -tsafe             Get the value of the safety temperature    \r\n");
+        inf_puts("   set -tsafe  [100-300]  Set the value of the safety temperature    \r\n");
+        inf_puts("   set -tp     [70-140]   Set the value of the user input temperature\r\n");
+        inf_puts("   clear                  Clear the terminal screen                  \r\n\n");
     }
 
     else

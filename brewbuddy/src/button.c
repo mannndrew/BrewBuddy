@@ -1,5 +1,5 @@
-// Heater Library (Definition)
-// File: heater.c
+// Button Library (Definition)
+// File: button.c
 // Group Members:
 // - Andrew Howard
 // - James Revette
@@ -13,8 +13,8 @@
 // Target uC:       TM4C123GH6PM
 // System Clock:    40 MHz
 
-// Hardware configuration:
-// GPIO PIN PA2 - Heater Relay
+// Hardware configuration
+// GPIO PIN PF4 - Heater Button
 
 //-----------------------------------------------------------------------------
 // Device Includes
@@ -23,7 +23,7 @@
 #include <stdint.h>
 #include <stdbool.h>
 #include "tm4c123gh6pm.h"
-#include "heater.h"
+#include "button.h"
 
 //-----------------------------------------------------------------------------
 // Defines
@@ -36,49 +36,25 @@
 #define PORTE_DATA      0x400243FC
 #define PORTF_DATA      0x400253FC
 
-#define HEATER                (*((volatile uint32_t *)(0x42000000 + (PORTA_DATA-0x40000000)*32 + 2*4)))
-#define RED_LED               (*((volatile uint32_t *)(0x42000000 + (PORTF_DATA-0x40000000)*32 + 1*4)))
-#define BLUE_LED              (*((volatile uint32_t *)(0x42000000 + (PORTF_DATA-0x40000000)*32 + 2*4)))
-
-#define HEATER_MASK           (1 << 2)
-#define RED_LED_MASK          (1 << 1)
-#define BLUE_LED_MASK         (1 << 2)
+#define BUTTON                (*((volatile uint32_t *)(0x42000000 + (PORTF_DATA-0x40000000)*32 + 4*4)))
+#define BUTTON_MASK           (1 << 4)
 
 //-----------------------------------------------------------------------------
 // Subroutines
 //-----------------------------------------------------------------------------
 
-// Initialize Heater
-void heater_init(void)
+void button_init(void) // Initialize Button
 {
-    SYSCTL_RCGCGPIO_R |= SYSCTL_RCGCGPIO_R0; // Enable Port A clock
     SYSCTL_RCGCGPIO_R |= SYSCTL_RCGCGPIO_R5; // Enable Port F clock
     __asm("   NOP"); // Wait cycle 1
     __asm("   NOP"); // Wait cycle 2
     __asm("   NOP"); // Wait cycle 3
-    GPIO_PORTA_DIR_R |= HEATER_MASK; // Configure Pin Direction Output
-    GPIO_PORTF_DIR_R |= RED_LED_MASK;
-    GPIO_PORTF_DIR_R |= BLUE_LED_MASK;
-
-    GPIO_PORTA_DEN_R |= HEATER_MASK; // Enable Digital Pins
-    GPIO_PORTF_DEN_R |= RED_LED_MASK;
-    GPIO_PORTF_DEN_R |= BLUE_LED_MASK;
+    GPIO_PORTF_DIR_R &= ~BUTTON_MASK; // Configure Pin Direction Output
+    GPIO_PORTF_DEN_R |=  BUTTON_MASK; // Enable Digital Pins
+    GPIO_PORTF_PUR_R |=  BUTTON_MASK; // Enable Pull-Up Resistor
 }
 
-// Turn Heater On
-void heater_on(void)
+bool button_status(void) // Get Button Status
 {
-    // Turn ON Heater and ON Red LED (Heater ON Indicator)
-    RED_LED = 1;
-    BLUE_LED = 0;
-    HEATER = 1;
-}
-
-// Turn Heater Off
-void heater_off(void)
-{
-    // Turn OFF Heater and ON Blue LED (Heater OFF Indicator)
-    RED_LED = 0;
-    BLUE_LED = 1;
-    HEATER = 0;
+    return !BUTTON;
 }

@@ -1,5 +1,5 @@
-// Heater Library (Header)
-// File: heater.c
+// Button Library (Header)
+// File: button.h
 // Group Members:
 // - Andrew Howard
 // - James Revette
@@ -9,32 +9,24 @@
 // Hardware Target
 //-----------------------------------------------------------------------------
 
-// Target Platform: EK-TM4C123GXL
+// Target Platform: EK-TM4C123GXL Evaluation Board
 // Target uC:       TM4C123GH6PM
 // System Clock:    40 MHz
 
-// Hardware configuration:
-// GPIO PIN PA2 - Heater Relay
-
-//-----------------------------------------------------------------------------
-// Preprocessor Directives
-//-----------------------------------------------------------------------------
-
-#ifndef HEATER_H_
-#define HEATER_H_
+// Hardware configuration
+// GPIO PIN PF4 - Heater Button
 
 //-----------------------------------------------------------------------------
 // Device Includes
 //-----------------------------------------------------------------------------
 
 #include <stdint.h>
+#include <stdbool.h>
+#include "tm4c123gh6pm.h"
 
 //-----------------------------------------------------------------------------
 // Subroutines
 //-----------------------------------------------------------------------------
 
-void heater_init(void); // Initialize Heater
-void heater_on(void);   // Turn Heater On
-void heater_off(void);  // Turn Heater Off
-
-#endif
+void button_init(void);   // Initialize Button
+bool button_status(void); // Get Button Status

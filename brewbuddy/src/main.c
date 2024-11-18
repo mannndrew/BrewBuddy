@@ -20,10 +20,13 @@
 #include <stdbool.h>
 #include "tm4c123gh6pm.h"
 #include "clock.h"
+#include "button.h"
+#include "eeprom.h"
 #include "heater.h"
 #include "thermo.h"
 #include "infra.h"
 #include "interface.h"
+#include "lcd.h"
 #include "tick.h"
 #include "wait.h"
 
@@ -31,9 +34,10 @@
 // Global Variables
 //-----------------------------------------------------------------------------
 
-uint32_t tp; // User Input Temperature
-uint32_t tm; // Thermistor Temperature
-uint32_t ti; // Infrared Temperature
+uint32_t tp;    // User Input Temperature
+uint32_t tm;    // Thermistor Temperature
+uint32_t ti;    // Infrared Temperature
+uint32_t tsafe; // Safety Temperature
 
 //-----------------------------------------------------------------------------
 // Hardware Initialize Function
@@ -42,10 +46,13 @@ uint32_t ti; // Infrared Temperature
 void hardware_init(void)
 {
     initSystemClockTo40Mhz();
+    button_init();
+    eeprom_init();
     heater_init();
     thermo_init();
     inf_init();
     infra_init();
+    lcd_init();
     tick_init();
     return;
 }
@@ -63,36 +70,20 @@ int main(void)
     hardware_init();
     heater_off();
     inf_boldOn();
-
-    ///////////// TEST CODE ///////////
-    /*
-    uint32_t value;
-    infra_init();
-    waitMicrosecond(2000);
-
-    while (1)
-    {
-        value = infra_read();
-        inf_printUINT(value);
-        inf_puts("\r\n");
-
-        // delay
-        waitMicrosecond(1000000);
-    }
-    */
-    ///////////////////////////////////
+    eeprom_read(&tsafe);
+    tp = 70;
 
     // Endless loop
     while(true)
     {
-        inf_setCursor(5);
+        inf_setCursor(6);
         inf_cursorOn();
         inf_getCommand(&data);
         inf_cursorOff();
-        inf_clearScreen(4, 10);
-        inf_setCursor(6);
+        inf_clearScreen(5, 12);
+        inf_setCursor(7);
         inf_parseCommand(&data);
-        inf_doCommand(&data, &tp, tm);
+        inf_doCommand(&data, &tp, &tsafe);
     }
 }
 
@@ -102,6 +93,17 @@ int main(void)
 
 void tick_ISR()
 {
+    bool heater_status;
+
+    if (button_status())
+    {
+        if (tp == 140)
+            tp = 70;
+        else
+            tp += 10 - (tp % 10);
+    }
+    
+
     // Get Infrared Temperature
     ti = infra_read();
 
@@ -109,13 +111,17 @@ void tick_ISR()
     tm = thermo_getTEMP(thermo_getADC());
 
     // Check if Heater should be on or off
-    if (tp <= tm)
-        heater_off();
-    else
+    heater_status = (tm < tsafe && ti < tp);
+    if (heater_status)
         heater_on();
+    else
+        heater_off();
 
     // Print Header
-    inf_printHeader(ti, tm, tp);
+    inf_printHeader(ti, tm, tp, heater_status);
+
+    // Print LCD
+    lcd_print(ti, tm, tp, heater_status);
 
     // Clear Interrupt Flag
     TIMER0_ICR_R = TIMER_ICR_TATOCINT; // clear interrupt flag

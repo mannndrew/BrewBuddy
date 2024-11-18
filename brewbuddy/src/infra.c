@@ -25,6 +25,7 @@
 #include <stdbool.h>
 #include "tm4c123gh6pm.h"
 #include "infra.h"
+#include "wait.h"
 
 /*
 #include "wait.h"
@@ -91,15 +92,18 @@ uint32_t infra_read(void)
     I2C0_MSA_R = (MLX90614_ADDR << 1) & ~0x01;                   // Set address (write)
     I2C0_MDR_R = MLX90614_OBJECT_REG;                            // Set the register
     I2C0_MCS_R = I2C_MASTER_CMD_BURST_SEND_START;                // Send start condition
-    while (I2C0_MCS_R & I2C_MCS_BUSY);                           // Wait for completion
+    waitMicrosecond(250);                                        // Wait for completion (Nonblocking)
+    // while (I2C0_MCS_R & I2C_MCS_BUSY);                        // Wait for completion (Blocking)
 
     I2C0_MSA_R = (MLX90614_ADDR << 1) | 0x01;                    // Set address (read)
     I2C0_MCS_R = I2C_MASTER_CMD_BURST_RECEIVE_START;             // Send start condition
-    while (I2C0_MCS_R & I2C_MCS_BUSY);                           // Wait for completion
+    waitMicrosecond(250);                                        // Wait for completion (Nonblocking)
+    // while (I2C0_MCS_R & I2C_MCS_BUSY);                        // Wait for completion (Blocking)
     data = I2C0_MDR_R;                                           // MSB first
 
     I2C0_MCS_R = I2C_MASTER_CMD_BURST_RECEIVE_FINISH;            // Send finish condition
-    while (I2C0_MCS_R & I2C_MCS_BUSY);                           // Wait for completion
+    waitMicrosecond(250);                                        // Wait for completion (Nonblocking)
+    // while (I2C0_MCS_R & I2C_MCS_BUSY);                        // Wait for completion (Blocking)
     data |= (I2C0_MDR_R << 8);                                   // LSB second
 
     C = (data * 0.02) - 273.15;
