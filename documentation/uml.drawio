@@ -4,110 +4,119 @@
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
-        <mxCell id="wpgfziIOmSFsvqhEl-EZ-4" value="&lt;div&gt;&lt;b&gt;Thermistor&lt;/b&gt;&lt;/div&gt;(thermo.c)&lt;br&gt;(thermo.h)" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-          <mxGeometry x="480" y="160" width="120" height="80" as="geometry" />
+        <mxCell id="wpgfziIOmSFsvqhEl-EZ-4" value="&lt;div&gt;&lt;b&gt;Thermistor&lt;/b&gt;&lt;/div&gt;(thermo.c)&lt;br&gt;(thermo.h)" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=default;" parent="1" vertex="1">
+          <mxGeometry x="80" y="400" width="120" height="80" as="geometry" />
         </mxCell>
-        <mxCell id="wpgfziIOmSFsvqhEl-EZ-5" value="thermo_init" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" parent="1" vertex="1">
-          <mxGeometry x="480" y="240" width="120" height="40" as="geometry" />
+        <mxCell id="wpgfziIOmSFsvqhEl-EZ-5" value="thermo_init" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=default;" parent="1" vertex="1">
+          <mxGeometry x="80" y="480" width="120" height="40" as="geometry" />
         </mxCell>
-        <mxCell id="wpgfziIOmSFsvqhEl-EZ-6" value="thermo_getADC" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" parent="1" vertex="1">
-          <mxGeometry x="480" y="280" width="120" height="40" as="geometry" />
+        <mxCell id="wpgfziIOmSFsvqhEl-EZ-6" value="thermo_getADC" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=default;" parent="1" vertex="1">
+          <mxGeometry x="80" y="520" width="120" height="40" as="geometry" />
         </mxCell>
-        <mxCell id="wpgfziIOmSFsvqhEl-EZ-7" value="&lt;div&gt;&lt;b&gt;System Clock&lt;/b&gt;&lt;/div&gt;(infra.c)&lt;br&gt;(infra.h)" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-          <mxGeometry x="880" y="160" width="120" height="80" as="geometry" />
+        <mxCell id="wpgfziIOmSFsvqhEl-EZ-7" value="&lt;div&gt;&lt;b&gt;System Clock&lt;/b&gt;&lt;/div&gt;(infra.c)&lt;br&gt;(infra.h)" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=default;" parent="1" vertex="1">
+          <mxGeometry x="400" y="600" width="120" height="80" as="geometry" />
         </mxCell>
-        <mxCell id="wpgfziIOmSFsvqhEl-EZ-8" value="initSystemClock&lt;div&gt;To40Mhz&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" parent="1" vertex="1">
-          <mxGeometry x="880" y="240" width="120" height="40" as="geometry" />
+        <mxCell id="wpgfziIOmSFsvqhEl-EZ-8" value="initSystemClock&lt;div&gt;To40Mhz&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=default;" parent="1" vertex="1">
+          <mxGeometry x="400" y="680" width="120" height="40" as="geometry" />
         </mxCell>
-        <mxCell id="wpgfziIOmSFsvqhEl-EZ-13" value="&lt;div&gt;&lt;b&gt;UART Interface&lt;/b&gt;&lt;/div&gt;(interface.c)&lt;br&gt;(interface.h)" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-          <mxGeometry x="280" y="160" width="120" height="80" as="geometry" />
+        <mxCell id="wpgfziIOmSFsvqhEl-EZ-13" value="&lt;div&gt;&lt;b&gt;UART Interface&lt;/b&gt;&lt;/div&gt;(interface.c)&lt;br&gt;(interface.h)" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=default;" parent="1" vertex="1">
+          <mxGeometry x="240" y="160" width="120" height="80" as="geometry" />
         </mxCell>
-        <mxCell id="wpgfziIOmSFsvqhEl-EZ-14" value="inf_init" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" parent="1" vertex="1">
-          <mxGeometry x="280" y="240" width="120" height="40" as="geometry" />
+        <mxCell id="wpgfziIOmSFsvqhEl-EZ-14" value="inf_init" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=default;" parent="1" vertex="1">
+          <mxGeometry x="240" y="240" width="120" height="40" as="geometry" />
         </mxCell>
-        <mxCell id="wpgfziIOmSFsvqhEl-EZ-15" value="inf_getCommand" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=0;fillColor=#f8cecc;strokeColor=#b85450;" parent="1" vertex="1">
-          <mxGeometry x="280" y="280" width="120" height="40" as="geometry" />
+        <mxCell id="wpgfziIOmSFsvqhEl-EZ-15" value="inf_getCommand" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=0;fillColor=#f8cecc;strokeColor=default;" parent="1" vertex="1">
+          <mxGeometry x="240" y="280" width="120" height="40" as="geometry" />
         </mxCell>
-        <mxCell id="wpgfziIOmSFsvqhEl-EZ-16" value="inf_parseCommand" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=0;fillColor=#f8cecc;strokeColor=#b85450;" parent="1" vertex="1">
-          <mxGeometry x="280" y="320" width="120" height="40" as="geometry" />
+        <mxCell id="wpgfziIOmSFsvqhEl-EZ-16" value="inf_parseCommand" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=0;fillColor=#f8cecc;strokeColor=default;" parent="1" vertex="1">
+          <mxGeometry x="240" y="320" width="120" height="40" as="geometry" />
         </mxCell>
-        <mxCell id="wpgfziIOmSFsvqhEl-EZ-17" value="inf_doCommand" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=0;fillColor=#f8cecc;strokeColor=#b85450;" parent="1" vertex="1">
-          <mxGeometry x="280" y="360" width="120" height="40" as="geometry" />
+        <mxCell id="wpgfziIOmSFsvqhEl-EZ-17" value="inf_doCommand" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=0;fillColor=#f8cecc;strokeColor=default;" parent="1" vertex="1">
+          <mxGeometry x="240" y="360" width="120" height="40" as="geometry" />
         </mxCell>
-        <mxCell id="wpgfziIOmSFsvqhEl-EZ-18" value="inf_getUINT" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-          <mxGeometry x="280" y="520" width="120" height="40" as="geometry" />
+        <mxCell id="wpgfziIOmSFsvqhEl-EZ-26" value="&lt;div&gt;&lt;b&gt;Heater&lt;/b&gt;&lt;/div&gt;(heater.c)&lt;br&gt;(heater.h)" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=default;" parent="1" vertex="1">
+          <mxGeometry x="240" y="440" width="120" height="80" as="geometry" />
         </mxCell>
-        <mxCell id="wpgfziIOmSFsvqhEl-EZ-19" value="inf_puts" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-          <mxGeometry x="280" y="440" width="120" height="40" as="geometry" />
+        <mxCell id="wpgfziIOmSFsvqhEl-EZ-27" value="heater_init" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=default;" parent="1" vertex="1">
+          <mxGeometry x="240" y="520" width="120" height="40" as="geometry" />
         </mxCell>
-        <mxCell id="wpgfziIOmSFsvqhEl-EZ-20" value="inf_getc" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-          <mxGeometry x="280" y="480" width="120" height="40" as="geometry" />
+        <mxCell id="wpgfziIOmSFsvqhEl-EZ-28" value="heater_on" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=default;" parent="1" vertex="1">
+          <mxGeometry x="240" y="560" width="120" height="40" as="geometry" />
         </mxCell>
-        <mxCell id="wpgfziIOmSFsvqhEl-EZ-21" value="inf_putc" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-          <mxGeometry x="280" y="400" width="120" height="40" as="geometry" />
-        </mxCell>
-        <mxCell id="wpgfziIOmSFsvqhEl-EZ-26" value="&lt;div&gt;&lt;b&gt;Heater&lt;/b&gt;&lt;/div&gt;(heater.c)&lt;br&gt;(heater.h)" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-          <mxGeometry x="680" y="160" width="120" height="80" as="geometry" />
-        </mxCell>
-        <mxCell id="wpgfziIOmSFsvqhEl-EZ-27" value="heater_init" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" parent="1" vertex="1">
-          <mxGeometry x="680" y="240" width="120" height="40" as="geometry" />
-        </mxCell>
-        <mxCell id="wpgfziIOmSFsvqhEl-EZ-28" value="heater_on" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" parent="1" vertex="1">
-          <mxGeometry x="680" y="280" width="120" height="40" as="geometry" />
-        </mxCell>
-        <mxCell id="wpgfziIOmSFsvqhEl-EZ-30" value="&lt;div&gt;&lt;b&gt;Main&lt;/b&gt;&lt;/div&gt;(main.c)&lt;br&gt;(main.h)" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+        <mxCell id="wpgfziIOmSFsvqhEl-EZ-30" value="&lt;div&gt;&lt;b&gt;Main&lt;/b&gt;&lt;/div&gt;(main.c)&lt;br&gt;(main.h)" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=default;" parent="1" vertex="1">
           <mxGeometry x="80" y="160" width="120" height="80" as="geometry" />
         </mxCell>
-        <mxCell id="wpgfziIOmSFsvqhEl-EZ-31" value="hardware_init" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" parent="1" vertex="1">
+        <mxCell id="wpgfziIOmSFsvqhEl-EZ-31" value="hardware_init" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=default;" parent="1" vertex="1">
           <mxGeometry x="80" y="240" width="120" height="40" as="geometry" />
         </mxCell>
-        <mxCell id="wpgfziIOmSFsvqhEl-EZ-35" value="main" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
+        <mxCell id="wpgfziIOmSFsvqhEl-EZ-35" value="main" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=default;" parent="1" vertex="1">
           <mxGeometry x="80" y="320" width="120" height="40" as="geometry" />
         </mxCell>
-        <mxCell id="wpgfziIOmSFsvqhEl-EZ-36" value="tick_ISR" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
+        <mxCell id="wpgfziIOmSFsvqhEl-EZ-36" value="tick_ISR" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=default;" parent="1" vertex="1">
           <mxGeometry x="80" y="280" width="120" height="40" as="geometry" />
         </mxCell>
-        <mxCell id="wpgfziIOmSFsvqhEl-EZ-38" value="&lt;div&gt;&lt;b&gt;System Tick&lt;/b&gt;&lt;/div&gt;(tick.c)&lt;br&gt;(tick.h)" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-          <mxGeometry x="1080" y="160" width="120" height="80" as="geometry" />
+        <mxCell id="wpgfziIOmSFsvqhEl-EZ-38" value="&lt;div&gt;&lt;b&gt;System Tick&lt;/b&gt;&lt;/div&gt;(tick.c)&lt;br&gt;(tick.h)" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=default;" parent="1" vertex="1">
+          <mxGeometry x="400" y="760" width="120" height="80" as="geometry" />
         </mxCell>
-        <mxCell id="wpgfziIOmSFsvqhEl-EZ-39" value="tick_init" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" parent="1" vertex="1">
-          <mxGeometry x="1080" y="240" width="120" height="40" as="geometry" />
+        <mxCell id="wpgfziIOmSFsvqhEl-EZ-39" value="tick_init" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=default;" parent="1" vertex="1">
+          <mxGeometry x="400" y="840" width="120" height="40" as="geometry" />
         </mxCell>
-        <mxCell id="WWMrw_l2_zWXb0vZIjVV-1" value="inf_printUINT" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="280" y="560" width="120" height="40" as="geometry" />
+        <mxCell id="WWMrw_l2_zWXb0vZIjVV-7" value="thermo_getTEMP" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=default;" parent="1" vertex="1">
+          <mxGeometry x="80" y="560" width="120" height="40" as="geometry" />
         </mxCell>
-        <mxCell id="WWMrw_l2_zWXb0vZIjVV-2" value="inf_isCombo" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="280" y="680" width="120" height="40" as="geometry" />
+        <mxCell id="WWMrw_l2_zWXb0vZIjVV-11" value="heater_off" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=default;" parent="1" vertex="1">
+          <mxGeometry x="240" y="600" width="120" height="40" as="geometry" />
         </mxCell>
-        <mxCell id="WWMrw_l2_zWXb0vZIjVV-3" value="inf_isNumber" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="280" y="600" width="120" height="40" as="geometry" />
+        <mxCell id="WWMrw_l2_zWXb0vZIjVV-12" value="Setup" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=default;" parent="1" vertex="1">
+          <mxGeometry x="680" y="480" width="120" height="40" as="geometry" />
         </mxCell>
-        <mxCell id="WWMrw_l2_zWXb0vZIjVV-4" value="inf_isAlpha" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="280" y="640" width="120" height="40" as="geometry" />
+        <mxCell id="WWMrw_l2_zWXb0vZIjVV-14" value="Operation" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=default;" parent="1" vertex="1">
+          <mxGeometry x="680" y="560" width="120" height="40" as="geometry" />
         </mxCell>
-        <mxCell id="WWMrw_l2_zWXb0vZIjVV-5" value="inf_isCommand" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="280" y="720" width="120" height="40" as="geometry" />
+        <mxCell id="WWMrw_l2_zWXb0vZIjVV-15" value="Control" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=default;" parent="1" vertex="1">
+          <mxGeometry x="680" y="520" width="120" height="40" as="geometry" />
         </mxCell>
-        <mxCell id="WWMrw_l2_zWXb0vZIjVV-6" value="inf_strCompare" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="280" y="760" width="120" height="40" as="geometry" />
+        <mxCell id="WWMrw_l2_zWXb0vZIjVV-16" value="Module Name" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=default;" parent="1" vertex="1">
+          <mxGeometry x="680" y="440" width="120" height="40" as="geometry" />
         </mxCell>
-        <mxCell id="WWMrw_l2_zWXb0vZIjVV-7" value="thermo_getTEMP" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
-          <mxGeometry x="480" y="320" width="120" height="40" as="geometry" />
+        <mxCell id="yQ8iqKuHG4hW6nG3QDGw-1" value="&lt;div&gt;&lt;b&gt;Button&lt;/b&gt;&lt;/div&gt;(button.c)&lt;br&gt;(button.h)" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=default;" vertex="1" parent="1">
+          <mxGeometry x="240" y="680" width="120" height="80" as="geometry" />
         </mxCell>
-        <mxCell id="WWMrw_l2_zWXb0vZIjVV-11" value="heater_off" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
-          <mxGeometry x="680" y="320" width="120" height="40" as="geometry" />
+        <mxCell id="yQ8iqKuHG4hW6nG3QDGw-3" value="button_init" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=default;" vertex="1" parent="1">
+          <mxGeometry x="240" y="760" width="120" height="40" as="geometry" />
         </mxCell>
-        <mxCell id="WWMrw_l2_zWXb0vZIjVV-12" value="Setup" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
-          <mxGeometry x="880" y="520" width="120" height="40" as="geometry" />
+        <mxCell id="yQ8iqKuHG4hW6nG3QDGw-4" value="button_status" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=default;" vertex="1" parent="1">
+          <mxGeometry x="240" y="800" width="120" height="40" as="geometry" />
         </mxCell>
-        <mxCell id="WWMrw_l2_zWXb0vZIjVV-14" value="Operation" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
-          <mxGeometry x="880" y="600" width="120" height="40" as="geometry" />
+        <mxCell id="yQ8iqKuHG4hW6nG3QDGw-5" value="&lt;div&gt;&lt;b&gt;EEPROM&lt;/b&gt;&lt;/div&gt;(eeprom.c)&lt;br&gt;(eeprom.h)" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=default;" vertex="1" parent="1">
+          <mxGeometry x="400" y="360" width="120" height="80" as="geometry" />
         </mxCell>
-        <mxCell id="WWMrw_l2_zWXb0vZIjVV-15" value="Control" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
-          <mxGeometry x="880" y="560" width="120" height="40" as="geometry" />
+        <mxCell id="yQ8iqKuHG4hW6nG3QDGw-6" value="eeprom_init" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=default;" vertex="1" parent="1">
+          <mxGeometry x="400" y="440" width="120" height="40" as="geometry" />
         </mxCell>
-        <mxCell id="WWMrw_l2_zWXb0vZIjVV-16" value="Utility" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="880" y="640" width="120" height="40" as="geometry" />
+        <mxCell id="yQ8iqKuHG4hW6nG3QDGw-7" value="eeprom_write" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=default;" vertex="1" parent="1">
+          <mxGeometry x="400" y="480" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="yQ8iqKuHG4hW6nG3QDGw-8" value="eeprom_read" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=default;" vertex="1" parent="1">
+          <mxGeometry x="400" y="520" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="yQ8iqKuHG4hW6nG3QDGw-9" value="&lt;div&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&lt;b&gt;Infrared&lt;/b&gt;&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;(infra.c)&lt;/span&gt;&lt;br&gt;&lt;/div&gt;(infra.h)" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=default;" vertex="1" parent="1">
+          <mxGeometry x="80" y="640" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="yQ8iqKuHG4hW6nG3QDGw-10" value="infra_init" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=default;" vertex="1" parent="1">
+          <mxGeometry x="80" y="720" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="yQ8iqKuHG4hW6nG3QDGw-11" value="infra_read" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=default;" vertex="1" parent="1">
+          <mxGeometry x="80" y="760" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="yQ8iqKuHG4hW6nG3QDGw-14" value="&lt;div&gt;&lt;b&gt;LCD&lt;/b&gt;&lt;/div&gt;(lcd.c)&lt;br&gt;(lcd.h)" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=default;" vertex="1" parent="1">
+          <mxGeometry x="400" y="160" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="yQ8iqKuHG4hW6nG3QDGw-15" value="lcd_init" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=default;" vertex="1" parent="1">
+          <mxGeometry x="400" y="240" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="yQ8iqKuHG4hW6nG3QDGw-16" value="lcd_print" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=default;" vertex="1" parent="1">
+          <mxGeometry x="400" y="280" width="120" height="40" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
